@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: project1-apache
+spec:
+  destination:
+    name: ''
+    namespace: project1
+    server: 'https://34.79.0.21'
+  source:
+    path: charts/apache
+    repoURL: 'https://github.com/vettom/ArgoCD.git'
+    targetRevision: HEAD
+  project: project1
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
