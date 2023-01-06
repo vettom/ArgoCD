@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: dv-nginx
+spec:
+  description: argo projects to create  
+  destinations:
+    - namespace: ''
+      server: https://34.79.0.21
+  sourceRepos:
+    - https://github.com/vettom/ArgoCD.git
