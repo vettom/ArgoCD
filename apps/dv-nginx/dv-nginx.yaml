@@ -1,16 +1,42 @@
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: dv-nginx
+# spec:
+#   destination:
+#     # name: ''
+#     namespace: dv-nginx
+#     server: https://34.79.0.21
+#   source:
+#     path: charts/nginx
+#     repoURL: https://github.com/vettom/ArgoCD.git
+#     targetRevision: HEAD
+#   project: dv-nginx
+#   syncPolicy:
+#     syncOptions:
+#       - CreateNamespace=true
+
+
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dv-nginx
+  name: nginx
 spec:
   destination:
-    # name: ''
+    name: ''
     namespace: dv-nginx
-    server: https://34.79.0.21
+    server: 'https://34.79.0.21'
   source:
     path: charts/nginx
-    repoURL: https://github.com/vettom/ArgoCD.git
+    repoURL: 'https://github.com/vettom/ArgoCD.git'
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: healthIngress.hostname
+          value: nginx.local
+        - name: replicaCount
+          value: '2'
   project: dv-nginx
   syncPolicy:
     syncOptions:
