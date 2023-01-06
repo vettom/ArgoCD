@@ -4,8 +4,8 @@ metadata:
   name: dv-nginx
 spec:
   destination:
-    name: ''
-    namespace: ''
+    # name: ''
+    namespace: 'dv-nginx'
     server: 'https://34.79.0.21'
   source:
     path: charts/nginx
