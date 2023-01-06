@@ -9,6 +9,7 @@ spec:
       kind: '*'
   destinations:
     - namespace: dv-nginx
+      server: https://kubernetes.default.svc
       server: https://34.79.0.21
   sourceRepos:
     - https://github.com/vettom/ArgoCD.git
