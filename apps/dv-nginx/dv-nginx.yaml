@@ -26,7 +26,7 @@ spec:
   destination:
     name: ''
     namespace: dv-nginx
-    server: 'https://34.79.0.21'
+    server: 'https://kubernetes.default.svc'
   source:
     path: charts/nginx
     repoURL: 'https://github.com/vettom/ArgoCD.git'
