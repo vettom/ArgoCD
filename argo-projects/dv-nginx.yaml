@@ -4,6 +4,9 @@ metadata:
   name: dv-nginx
 spec:
   description: argo projects to create  
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
   destinations:
     - namespace: dv-nginx
       server: https://34.79.0.21

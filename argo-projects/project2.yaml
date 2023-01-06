@@ -4,6 +4,9 @@ metadata:
   name: project2
 spec:
   description: argo projects to create  
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
   destinations:
     - namespace: project2
       server: https://34.79.0.21

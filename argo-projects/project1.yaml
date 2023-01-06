@@ -4,6 +4,9 @@ metadata:
   name: project1
 spec:
   description: argo projects to create  
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
   destinations:
     - namespace: project1
       server: https://kubernetes.default.svc
