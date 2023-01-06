@@ -5,11 +5,11 @@ metadata:
 spec:
   destination:
     # name: ''
-    namespace: 'dv-nginx'
+    namespace: dv-nginx
     server: https://34.79.0.21
   source:
     path: charts/nginx
-    repoURL: 'https://github.com/vettom/ArgoCD.git'
+    repoURL: https://github.com/vettom/ArgoCD.git
     targetRevision: HEAD
   project: dv-nginx
   syncPolicy:
