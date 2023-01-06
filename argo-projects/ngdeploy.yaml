@@ -5,6 +5,9 @@ metadata:
 spec:
   description: argo projects to create  
   destinations:
+    clusterResourceWhitelist:
+    - group: ''
+      kind: 'Namespace'
     - namespace: ngdeploy
       server: https://34.79.0.21
   sourceRepos:
