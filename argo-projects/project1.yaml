@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project1
+spec:
+  description: Project for conductor deployments
+  destinations:
+    - namespace: cap
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/vettom/ArgoCD.git
