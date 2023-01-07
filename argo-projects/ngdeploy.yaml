@@ -6,7 +6,7 @@ spec:
   description: argo projects to create  
   clusterResourceWhitelist:
     - group: ''
-      kind: 'Namespace'
+      kind: '*'
   destinations:
     - namespace: ngdeploy
       server: https://kubernetes.default.svc
