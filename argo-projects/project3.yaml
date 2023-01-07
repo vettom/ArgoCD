@@ -1,14 +1,14 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: AppProject
-# metadata:
-#   name: project3
-# spec:
-#   description: argo projects to create  
-#   clusterResourceWhitelist:
-#     - group: '*'
-#       kind: '*'
-#   destinations:
-#     - namespace: project3
-#       server: https://kubernetes.default.svc
-#   sourceRepos:
-#     - https://github.com/vettom/ArgoCD.git
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: project3
+spec:
+  description: argo projects to create  
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  destinations:
+    - namespace: project3
+      server: https://kubernetes.default.svc
+  sourceRepos:
+    - https://github.com/vettom/ArgoCD.git
