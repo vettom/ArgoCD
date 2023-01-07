@@ -1,16 +1,16 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: ngdeploy
-# spec:
-#   destination:
-#     namespace: ngdeploy
-#     server: 'https://34.79.0.21'
-#   source:
-#     path: charts/ngdeploy
-#     repoURL: 'https://github.com/vettom/ArgoCD.git'
-#     targetRevision: HEAD
-#   project: ngdeploy
-#   syncPolicy:
-#     syncOptions:
-#       - CreateNamespace=true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ngdeploy
+spec:
+  destination:
+    namespace: ngdeploy
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: charts/ngdeploy
+    repoURL: 'https://github.com/vettom/ArgoCD.git'
+    targetRevision: HEAD
+  project: ngdeploy
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
