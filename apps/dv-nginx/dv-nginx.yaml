@@ -14,7 +14,7 @@ spec:
     helm:
       parameters:
         - name: replicaCount
-          value: '2'
+          value: '1'
   project: dv-nginx
   syncPolicy:
     syncOptions:
