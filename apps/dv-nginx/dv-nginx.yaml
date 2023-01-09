@@ -1,21 +1,21 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: dv-nginx
-spec:
-  destination:
-    name: ''
-    namespace: dv-nginx
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: charts/nginx
-    repoURL: 'https://github.com/vettom/ArgoCD.git'
-    targetRevision: HEAD
-    helm:
-      parameters:
-        - name: replicaCount
-          value: '1'
-  project: dv-nginx
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: dv-nginx
+# spec:
+#   destination:
+#     name: ''
+#     namespace: dv-nginx
+#     server: 'https://kubernetes.default.svc'
+#   source:
+#     path: charts/nginx
+#     repoURL: 'https://github.com/vettom/ArgoCD.git'
+#     targetRevision: HEAD
+#     helm:
+#       parameters:
+#         - name: replicaCount
+#           value: '1'
+#   project: dv-nginx
+#   syncPolicy:
+#     syncOptions:
+#       - CreateNamespace=true
