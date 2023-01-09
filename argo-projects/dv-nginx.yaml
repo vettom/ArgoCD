@@ -6,7 +6,7 @@ spec:
   description: argo projects to create  
   clusterResourceWhitelist:
     - group: '*'
-      kind: 'namespace'
+      kind: '*'
   destinations:
     - namespace: dv-nginx
       server: https://kubernetes.default.svc
