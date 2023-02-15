@@ -9,5 +9,9 @@ helm install argocd argo/argo-cd
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
-d4c606jSfqJ33M4M
+5lh4TsQosdzYBjeF
 
+# Bootstrap argocd
+```bash
+kubectl apply -k bootstrap
+```
