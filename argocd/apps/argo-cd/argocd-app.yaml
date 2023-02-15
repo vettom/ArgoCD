@@ -8,8 +8,8 @@ spec:
     server: 'https://kubernetes.default.svc'
   source:
     repoURL: 'https://argoproj.github.io/argo-helm'
-    chart: argo/argo-cd
-    targetRevision: HEAD
+    chart: argo-cd
+    targetRevision: 3.35.4
   project: argocd
   syncPolicy:
     syncOptions:
