@@ -1,16 +1,3 @@
-server:
-  ingress:
-    enabled: true
-    ingressClassName: "nginx"
-    hosts:
-      host1: argo.dev.gomedia.io
-configs:
-  cm:
-    url: https://argo.dev.gomedia.io
-controller:
-  resources:
-    limits:
-      memory: 500Mi
-    requests:
-      cpu: 1
-      memory: 500Mi
+wiz:
+  enabled: false
+  version: 
