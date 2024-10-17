@@ -1,7 +1,7 @@
 apiVersion: v2
-name: uk-audio-services-eks-common-apps
+name: dv-common-apps
 description: A Helm chart for Kubernetes default applications
 
 type: application
 
-version: 1.1.27
+version: 0.0.1
