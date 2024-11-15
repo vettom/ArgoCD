@@ -12,5 +12,23 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 
 # Bootstrap argocd
 ```bash
-kubectl apply -k bootstrap
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: 01-eks-common-apps
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  syncPolicy:
+    # automated: {}
+    syncOptions:
+      - CreateNamespace=false
+  sources:
+    - repoURL: https://github.com/vettom/ArgoCD.git
+      targetRevision: HEAD
+      path: .
 ```
