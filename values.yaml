@@ -1,3 +1,4 @@
-wiz:
-  enabled: false
-  version: 
+environment:
+prometheus_stack:
+  version: 65.7.0
+
