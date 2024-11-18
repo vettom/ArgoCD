@@ -1,4 +1,5 @@
 environment:
 prometheus_stack:
   version: 65.7.0
+  enable_alerts: false
 
