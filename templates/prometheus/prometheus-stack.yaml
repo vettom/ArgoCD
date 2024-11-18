@@ -43,7 +43,7 @@ spec:
                     - send_resolved: false
                       priority: '{{`{{ range .Alerts }}{{ if eq .Labels.severity "critical"}}P1{{else if eq .Labels.severity "warning"}}P2{{else if eq .Labels.severity "info"}}P3{{else}}P4{{end}}{{end}}`}}'
                       responders:
-                        - name: {{ default 'Helix - Incident team' .Values.prometheus_stack.alert_team }}'AlertsTesting'
+                        - name: {{ default "Helix - Incident team" .Values.prometheus_stack.alert_team }}'AlertsTesting'
                           type: 'team'
               route:
                 group_by: ['severity']
