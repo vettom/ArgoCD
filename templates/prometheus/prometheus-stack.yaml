@@ -31,7 +31,7 @@ spec:
             enabled: false
           alertmanager:
             enabled: true
-          {{- if and .Values.prometheus_stack.enable_alerts -}}
+          {{- if and .Values.prometheus_stack.enable_alerting -}}
             config:
               global:
                 opsgenie_api_key_file: /etc/alertmanager/secrets/opsgenie_api_key
@@ -43,7 +43,7 @@ spec:
                     - send_resolved: false
                       priority: '{{`{{ range .Alerts }}{{ if eq .Labels.severity "critical"}}P1{{else if eq .Labels.severity "warning"}}P2{{else if eq .Labels.severity "info"}}P3{{else}}P4{{end}}{{end}}`}}'
                       responders:
-                        - name: 'AlertsTesting'
+                        - name: {{ default 'Helix - Incident team' .Values.prometheus_stack.alert_team }}'AlertsTesting'
                           type: 'team'
               route:
                 group_by: ['severity']
@@ -71,5 +71,5 @@ spec:
                 kubeSchedulerAlerting: false
             additionalRuleLabels:
               team: cloudops
-              environment: prd
+              environment: {{ .Values.environment }}
 
