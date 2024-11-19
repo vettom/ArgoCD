@@ -1,0 +1,58 @@
+{{- if and .Values.prometheus_stack.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+     release: kube-prometheus-stack
+  name: external-dns-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: external-dns
+      rules:
+        - alert: ExternalDNSLastSyncTimeMetricMissing
+          annotations:
+            summary: "The metric used to observe external dns last sync time is missing."
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            absent(external_dns_controller_last_sync_timestamp_seconds)
+          for: 15m
+          labels:
+            team: cloudops
+            service: externaldns
+            severity: warning
+        - alert: ExternalDNSLastSyncTime
+          annotations:
+            summary: "External dns hasn't synced for over 10 minutes"
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            time() - external_dns_controller_last_sync_timestamp_seconds > 600
+          labels:
+            team: cloudops
+            service: externaldns
+            severity: warning
+        - alert: ExternalDNSSourceErrors
+          annotations:
+            summary: "External dns is experiencing source errors"
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            rate(external_dns_source_errors_total[5m]) > 0
+          for: 10m
+          labels:
+            team: cloudops
+            service: externaldns
+            severity: warning
+        - alert: ExternalDNSRegitryErrors
+          annotations:
+            summary: "External dns is experiencing registry errors"
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            rate(external_dns_registry_errors_total[5m]) > 0
+          for: 10m
+          labels:
+            team: cloudops
+            service: externaldns
+            severity: warning
+{{- end -}}

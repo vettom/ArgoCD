@@ -1,0 +1,37 @@
+{{- if and .Values.prometheus_stack.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+     release: kube-prometheus-stack
+  name: argocd-alerts
+  namespace: argocd
+spec:
+  groups:
+    - name: ArgoCD
+      rules:
+        - alert: ArgoCDAppOutOfSync
+          annotations:
+            summary: App {{`{{$labels.name}}`}} reporting {{`{{ $labels.sync_status}}`}} sync status for over 15 minutes.
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            sum(argocd_app_info{sync_status!="Synced"}) by (sync_status, name)
+          for: 15m
+          labels:
+            team: cloudops
+            service: argocd
+            severity: warning
+        - alert: ArgoCDAppHealth
+          annotations:
+            summary: App {{`{{$labels.name}}`}} reporting {{`{{$labels.health_status}}`}} health state for over 15 minutes.
+            runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+          expr: |
+            sum(argocd_app_info{health_status!="Healthy"}) by (health_status, name)
+          for: 15m
+          labels:
+            team: cloudops
+            service: argocd
+            severity: critical
+{{- end -}}
