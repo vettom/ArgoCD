@@ -1,3 +1,4 @@
+![vettom.pages.dev banner](https://vettom-images.s3.eu-west-1.amazonaws.com/logo/vettom-banner.jpg)
 # ArgoCD
 Setting up ArgoCD for kubernetes deployment.
 
