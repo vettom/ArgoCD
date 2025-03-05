@@ -1,75 +1,75 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: kube-prometheus-stack
-spec:
-  destination:
-    namespace: monitoring
-    server: https://kubernetes.default.svc
-  project: default
-  syncPolicy:
-    automated: {}
-    syncOptions:
-    - ServerSideApply=true
-    - CreateNamespace=true
-  sources:
-    - repoURL: https://prometheus-community.github.io/helm-charts
-      chart: kube-prometheus-stack
-      targetRevision: {{ .Values.prometheus_stack.version }}
-      helm:
-        valuesObject:
-          commonLabels:
-            prometheus_server: kube-prometheus-stack
-          crds:
-            enabled: true
-          prometheus:
-            service:
-              type: ClusterIP
-            ingress:
-              enabled: false   
-          grafana:
-            enabled: false
-          alertmanager:
-            enabled: true
-          {{- if .Values.prometheus_stack.enable_alerting }}
-            config:
-              global:
-                opsgenie_api_key_file: /etc/alertmanager/secrets/opsgenie_api_key
-                opsgenie_api_url: 'https://api.eu.opsgenie.com/'
-              receivers:
-                - name: 'null'
-                - name: 'opsgenie'
-                  opsgenie_configs:
-                    - send_resolved: false
-                      priority: '{{`{{ range .Alerts }}{{ if eq .Labels.severity "critical"}}P1{{else if eq .Labels.severity "warning"}}P2{{else if eq .Labels.severity "info"}}P3{{else}}P4{{end}}{{end}}`}}'
-                      responders:
-                        - name: {{ .Values.prometheus_stack.alert_team | default "Helix - Incident team" }}
-                          type: 'team'
-              route:
-                group_by: ['severity']
-                routes:
-                  - receiver: 'opsgenie'
-                    matchers:
-                      - severity=~ "warning|critical"
-            alertmanagerSpec:
-              volumes:
-                - name: opsgenie-secret-volume
-                  secret:
-                    secretName: opsgenie-secret
-              volumeMounts:
-                - name: opsgenie-secret-volume
-                  mountPath: /etc/alertmanager/secrets
-                  readOnly: true 
-          {{- end }}           
-          defaultRules:
-            rules:
-              create: true
-              rules:
-                etcd: false
-                windows: false
-                kubeControllerManager: false
-                kubeSchedulerAlerting: false
-            additionalRuleLabels:
-              team: cloudops
-              environment: {{ .Values.environment | default "dev" }}
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: kube-prometheus-stack
+# spec:
+#   destination:
+#     namespace: monitoring
+#     server: https://kubernetes.default.svc
+#   project: default
+#   syncPolicy:
+#     automated: {}
+#     syncOptions:
+#     - ServerSideApply=true
+#     - CreateNamespace=true
+#   sources:
+#     - repoURL: https://prometheus-community.github.io/helm-charts
+#       chart: kube-prometheus-stack
+#       targetRevision: {{ .Values.prometheus_stack.version }}
+#       helm:
+#         valuesObject:
+#           commonLabels:
+#             prometheus_server: kube-prometheus-stack
+#           crds:
+#             enabled: true
+#           prometheus:
+#             service:
+#               type: ClusterIP
+#             ingress:
+#               enabled: false   
+#           grafana:
+#             enabled: false
+#           alertmanager:
+#             enabled: true
+#           {{- if .Values.prometheus_stack.enable_alerting }}
+#             config:
+#               global:
+#                 opsgenie_api_key_file: /etc/alertmanager/secrets/opsgenie_api_key
+#                 opsgenie_api_url: 'https://api.eu.opsgenie.com/'
+#               receivers:
+#                 - name: 'null'
+#                 - name: 'opsgenie'
+#                   opsgenie_configs:
+#                     - send_resolved: false
+#                       priority: '{{`{{ range .Alerts }}{{ if eq .Labels.severity "critical"}}P1{{else if eq .Labels.severity "warning"}}P2{{else if eq .Labels.severity "info"}}P3{{else}}P4{{end}}{{end}}`}}'
+#                       responders:
+#                         - name: {{ .Values.prometheus_stack.alert_team | default "Helix - Incident team" }}
+#                           type: 'team'
+#               route:
+#                 group_by: ['severity']
+#                 routes:
+#                   - receiver: 'opsgenie'
+#                     matchers:
+#                       - severity=~ "warning|critical"
+#             alertmanagerSpec:
+#               volumes:
+#                 - name: opsgenie-secret-volume
+#                   secret:
+#                     secretName: opsgenie-secret
+#               volumeMounts:
+#                 - name: opsgenie-secret-volume
+#                   mountPath: /etc/alertmanager/secrets
+#                   readOnly: true 
+#           {{- end }}           
+#           defaultRules:
+#             rules:
+#               create: true
+#               rules:
+#                 etcd: false
+#                 windows: false
+#                 kubeControllerManager: false
+#                 kubeSchedulerAlerting: false
+#             additionalRuleLabels:
+#               team: cloudops
+#               environment: {{ .Values.environment | default "dev" }}
 
