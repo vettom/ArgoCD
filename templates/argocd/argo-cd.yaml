@@ -29,7 +29,7 @@ spec:
             application.namespaces: "default, argocd, dvdemo"
             applicationsetcontroller.namespaces: "default, argocd, dvdemo"
             notificationscontroller.selfservice.enabled: true
-            applicationsetcontroller.allowed.scm.providers: false
+            applicationsetcontroller.allowed.scm.providers: "https://github.com/vettom/ArgoCD.git, https://github.com/vettom/github-action-ghcr-helm-chart.git"
           cm:
             application.resourceTrackingMethod: annotation+label
         notifications:
