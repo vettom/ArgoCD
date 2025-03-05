@@ -30,7 +30,7 @@ spec:
     # automated: {}
     syncOptions:
       - CreateNamespace=false
-  sources:
+  source:
     - repoURL: https://github.com/vettom/ArgoCD.git
       targetRevision: HEAD
       path: .

@@ -28,6 +28,8 @@ spec:
           params:
             application.namespaces: "default, dvdemo, argocd"
             notificationscontroller.selfservice.enabled: true
+          cm:
+            application.resourceTrackingMethod: annotation+label
         notifications:
           secret:
             create: false
