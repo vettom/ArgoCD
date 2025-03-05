@@ -26,7 +26,7 @@ spec:
             - --insecure
         configs:
           params:
-            application.namespaces: "default, dvdemo, argocd"
+            application.namespaces: "*"
             notificationscontroller.selfservice.enabled: true
           cm:
             application.resourceTrackingMethod: annotation+label
