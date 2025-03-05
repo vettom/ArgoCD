@@ -29,6 +29,7 @@ spec:
             application.namespaces: "*"
             applicationsetcontroller.namespaces: "*"
             notificationscontroller.selfservice.enabled: true
+            applicationsetcontroller.allowed.scm.providers: false
           cm:
             application.resourceTrackingMethod: annotation+label
         notifications:
