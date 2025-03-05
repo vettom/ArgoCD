@@ -26,7 +26,7 @@ spec:
             - --insecure
         configs:
           params:
-            application.namespaces: "default, dvdemo"
+            application.namespaces: "default, dvdemo, argocd"
             notificationscontroller.selfservice.enabled: true
         notifications:
           secret:

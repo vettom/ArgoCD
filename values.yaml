@@ -1,7 +1,7 @@
 environment: prd
-prometheus_stack:
-  enabled: true
-  version: 65.7.0
-  enable_alerting: true
+# prometheus_stack:
+#   enabled: true
+#   version: 65.7.0
+#   enable_alerting: true
   # alert_team: 'AlertTesting'
 
