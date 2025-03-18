@@ -8,3 +8,4 @@ prometheus_crds:
   version: 14.0.0
 prometheus_blackbox:
   version: 
+  targets: []
