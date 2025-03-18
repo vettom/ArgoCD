@@ -1,0 +1,21 @@
+{{- if and .Values.prometheus_stack.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-blackbox-exporter
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: core
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: {{ .Values.prometheus_blackbox.version }}
+      helm:
+        valuesObject:
+          extraArgs:
+            - "--log.level=warn"
+          configReloader:
+            enabled: true
+{{- end -}}

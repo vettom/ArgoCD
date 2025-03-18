@@ -18,7 +18,7 @@ spec:
   sources:
   - repoURL: https://argoproj.github.io/argo-helm
     chart: argo-cd
-    targetRevision: 7.8.4
+    targetRevision: {{ .Values.argocd.version }}
     helm:
       valuesObject:
         server:
@@ -29,12 +29,3 @@ spec:
             create: false
           cm:
             create: false
----
-        # configs:
-        #   params:
-        #     application.namespaces: "default, argocd, dvdemo"
-        #     applicationsetcontroller.namespaces: "default, argocd, dvdemo"
-        #     notificationscontroller.selfservice.enabled: true
-        #     applicationsetcontroller.allowed.scm.providers: "https://github.com/vettom/github-action-ghcr-helm-chart.git"
-        #   cm:
-        #     application.resourceTrackingMethod: annotation+label

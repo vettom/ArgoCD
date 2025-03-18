@@ -1,0 +1,45 @@
+# {{- if and .Values.prometheus_stack.enabled -}}
+# apiVersion: monitoring.coreos.com/v1
+# kind: PrometheusRule
+# metadata:
+#   annotations:
+#     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+#   labels:
+#      release: kube-prometheus-stack
+#   name: blackbox-alerts
+#   namespace: monitoring
+# spec:
+#   groups:
+#     - name: blackboxAlerts
+#       rules:
+#         - alert: URLFailedToRespond
+#           annotations:
+#             summary: "URL {{`{{ $labels.instance }}`}} failed to respond for the past 5 minutes."
+#             runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+#           expr: |
+#             probe_success == 0
+#           for: 5m
+#           labels:
+#             team: cloudops
+#             severity: warning
+#         - alert: CertificateExpirywarning
+#           annotations:
+#             summary: "URL {{`{{ $labels.instance }}`}} certificate expring in 10 days."
+#             runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+#           expr: |
+#             probe_ssl_earliest_cert_expiry{project=~"$project", app=~"$app"} - time() < (3600 * 24 * 10)
+#           for: 15m
+#           labels:
+#             team: cloudops
+#             severity: warning
+#         - alert: CertificateExpiryCritical
+#           annotations:
+#             summary: "URL {{`{{ $labels.instance }}`}} certificate expring in 5 days."
+#             runbook_url: https://baueraudio.atlassian.net/wiki/spaces/Rayo/pages/284033025/Quick+Links+and+shortcuts
+#           expr: |
+#             probe_ssl_earliest_cert_expiry{project=~"$project", app=~"$app"} - time() < (3600 * 24 * 5)
+#           for: 15m
+#           labels:
+#             team: cloudops
+#             severity: critical
+# {{- end -}}

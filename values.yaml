@@ -1,1 +1,11 @@
 environment: prd
+argocd:
+  version: 7.8.4
+prometheus_stack:
+  enabled: false
+  version: 62.3.1
+prometheus_crds:
+  version: 14.0.0
+prometheus_blackbox:
+  version: 9.3.0
+  targets: []

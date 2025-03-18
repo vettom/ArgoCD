@@ -1,0 +1,72 @@
+{{- if and .Values.prometheus_stack.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: core
+  syncPolicy:
+    automated: {}
+    prune: true
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: {{ .Values.prometheus_stack.version }}
+      helm:
+        valuesObject:
+          crds:
+            enabled: false
+          commonLabels:
+            prometheus_server: kube-prometheus-stack
+          prometheus:
+            service:
+              type: ClusterIP
+            ingress:
+              enabled: false
+            prometheusSpec:          
+              serviceMonitorSelector:
+                matchLabels:
+                  release: kube-prometheus-stack
+              enableRemoteWriteReceiver: true
+              # additionalScrapeConfigs:
+              #   - job_name: blackbox_monitoring
+              #     metrics_path: /probe
+              #     params:
+              #       module:
+              #         - http_2xx
+              #     relabel_configs:
+              #       - source_labels:
+              #           - __address__
+              #         target_label: __param_target
+              #       - source_labels:
+              #           - __param_target
+              #         target_label: instance
+              #       - replacement: prometheus-blackbox-exporter.monitoring.svc.cluster.local:9115
+              #         target_label: __address__
+              #     static_configs:
+              #       - targets:
+              #         {{ range .Values.prometheus_blackbox.targets }}
+              #         - {{ . }}
+              #         {{ end }}     
+          grafana:
+            service:
+              type: ClusterIP
+            enabled: false
+          alertmanager:
+            enabled: true
+            ingress:
+              enabled: false
+          defaultRules:
+            rules:
+              etcd: false
+              windows: false
+              kubeControllerManager: false
+              kubeSchedulerAlerting: false
+              kubeApiserverBurnrate: false
+              kubeApiserverHistogram: false
+              kubeApiserverSlos: false
+              kubeDns: false
+{{- end -}}
