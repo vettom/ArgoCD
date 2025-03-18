@@ -2,10 +2,9 @@ environment: prd
 argocd:
   version: 7.8.4
 prometheus_stack:
-  enabled: true
+  enabled: false
   version: 
 prometheus_crds:
   version: 14.0.0
 prometheus_blackbox:
   version: 
-  # targets: 
