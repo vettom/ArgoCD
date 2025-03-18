@@ -3,9 +3,9 @@ argocd:
   version: 7.8.4
 prometheus_stack:
   enabled: true
-  version: 62.3.1
+  version: 
 prometheus_crds:
   version: 14.0.0
 prometheus_blackbox:
-  version: 9.3.0
+  version: 
   targets: []
