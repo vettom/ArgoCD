@@ -4,7 +4,7 @@ metadata:
   name: iam-chart
 spec:
   destination:
-    namespace: monitoring
+    namespace: ack-systems
     server: https://kubernetes.default.svc
   project: default
   syncPolicy:
